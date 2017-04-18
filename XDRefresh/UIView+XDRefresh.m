@@ -347,6 +347,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
         
         return;
     }
+    
     //当结束刷新时，把状态置为全非状态，避免在临界点时fresh 和 default 状态同时存在造成冲突
     if (self.refreshStatus != XDREFRESH_None) {
         self.refreshStatus = XDREFRESH_None;
