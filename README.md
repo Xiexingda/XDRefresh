@@ -1,5 +1,6 @@
 # XDRefresh
-a down refresh method
+
+仿微信朋友圈下拉刷新
 
 //使用方法
 
