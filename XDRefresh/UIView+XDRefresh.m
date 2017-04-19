@@ -12,6 +12,8 @@
 #define MARGINTOP   60      //刷新icon区间
 #define ICONSIZE    30      //下拉刷新icon 的大小
 
+#define CircleTime  0.8     //旋转一圈所用时间
+
 static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key;
 
 @implementation UIView (XDRefresh)
@@ -92,10 +94,10 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
         CGRect positionFrame;
         
         if (position.x || position.y) {
-            positionFrame = CGRectMake(position.x, self.frame.origin.y - position.y, ICONSIZE, ICONSIZE);
+            positionFrame = CGRectMake(position.x, self.frame.origin.y + position.y, ICONSIZE, ICONSIZE);
             
         } else {
-            positionFrame = CGRectMake(10, self.frame.origin.y - 34, ICONSIZE, ICONSIZE);
+            positionFrame = CGRectMake(10, self.frame.origin.y + 34, ICONSIZE, ICONSIZE);
         }
             self.refreshView = [[RefreshView alloc]initWithFrame:positionFrame];
     }
@@ -301,7 +303,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
                                 //逆时针效果
                                 self.animation.fromValue = [NSNumber numberWithFloat:0.f];
                                 self.animation.toValue =  [NSNumber numberWithFloat: -M_PI *2];
-                                self.animation.duration  = 0.5;
+                                self.animation.duration  = CircleTime;
                                 self.animation.autoreverses = NO;
                                 self.animation.fillMode =kCAFillModeForwards;
                                 self.animation.repeatCount = MAXFLOAT; //一直自旋转
