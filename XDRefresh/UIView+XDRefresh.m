@@ -324,8 +324,8 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     if (!self.extenScrollView) {
         return;
     }
-    //延迟刷新1秒，避免立即返回tableview时offset不稳定造成反弹等不理想的效果
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    //延迟刷新0.3秒，避免立即返回tableview时offset不稳定造成反弹等不理想的效果
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self endRefresh];
     });
 }
@@ -361,7 +361,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     if (self.refreshStatus != XDREFRESH_None) {
         self.refreshStatus = XDREFRESH_None;
         
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:0.3 animations:^{
             [self.refreshView setContentOffset:CGPointMake(0, 0)];
             
         } completion:^(BOOL finished) {
