@@ -13,6 +13,7 @@
 #define ICONSIZE    30      //下拉刷新icon 的大小
 
 #define CircleTime  0.8     //旋转一圈所用时间
+#define IconBackTime 0.2    //icon刷新完返回最顶端的时间
 
 static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key;
 
@@ -363,7 +364,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     if (self.refreshStatus != XDREFRESH_None) {
         self.refreshStatus = XDREFRESH_None;
         
-        [UIView animateWithDuration:0.3 animations:^{
+        [UIView animateWithDuration:IconBackTime animations:^{
             [self.refreshView setContentOffset:CGPointMake(0, 0)];
             
         } completion:^(BOOL finished) {
