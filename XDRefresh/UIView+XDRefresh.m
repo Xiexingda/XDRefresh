@@ -348,7 +348,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
         return;
     }
     
-    //当结束刷新时，把状态置为全非状态，避免在临界点时fresh 和 default 状态同时存在造成冲突
+    //当结束刷新时，把状态置为全非状态，避免在[UIView animateWithDuration:0.2]icon返回动作中的人为干预，造成icon闪顿现象
     if (self.refreshStatus != XDREFRESH_None) {
         self.refreshStatus = XDREFRESH_None;
         
