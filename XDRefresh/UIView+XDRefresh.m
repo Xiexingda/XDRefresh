@@ -92,10 +92,10 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
         CGRect positionFrame;
         
         if (position.x || position.y) {
-            positionFrame = CGRectMake(position.x, position.y, ICONSIZE, ICONSIZE);
+            positionFrame = CGRectMake(position.x, self.extenScrollView.contentInset.top - position.y, ICONSIZE, ICONSIZE);
             
         } else {
-            positionFrame = CGRectMake(10, 34, ICONSIZE, ICONSIZE);
+            positionFrame = CGRectMake(10,self.extenScrollView.contentInset.top - 34, ICONSIZE, ICONSIZE);
         }
             self.refreshView = [[RefreshView alloc]initWithFrame:positionFrame];
     }
