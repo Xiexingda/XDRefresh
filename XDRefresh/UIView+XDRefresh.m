@@ -318,13 +318,22 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
 }
 
 /**
- 结束刷新
+ 结束刷新 对外接口
  */
 - (void)XD_endRefresh {
     if (!self.extenScrollView) {
         return;
     }
-    
+    //延迟刷新1秒，避免立即返回tableview时offset不稳定造成反弹等不理想的效果
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self endRefresh];
+    });
+}
+
+/**
+ 结束刷新执行函数
+ */
+- (void)endRefresh {
     /**
      仿微信当下拉一直拖住时，icon不会返回
      虽然在repeat的计时器里，但是该方法只会回调一次
@@ -336,7 +345,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
         //iOS10 以上
         if ([UIDevice currentDevice].systemVersion.floatValue >= 10) {
             [NSTimer scheduledTimerWithTimeInterval:0.2 repeats:YES block:^(NSTimer * _Nonnull timer) {
-                [self XD_endRefresh];
+                [self endRefresh];
                 [timer invalidate];
             }];
             
@@ -360,7 +369,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
             self.refreshStatus = XDREFRESH_Default;
             //结束动画
             [self.refreshView.refreshIcon.layer removeAnimationForKey:@"refreshing"];
-
+            
             //当回到原始位置后，转角也回到原始位置
             [self trangleToBeOriginal];
         }];
