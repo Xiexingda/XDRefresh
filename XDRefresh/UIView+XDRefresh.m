@@ -382,7 +382,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
  @param timer nstimer
  */
 - (void)timerCall:(NSTimer *)timer {
-    [self XD_endRefresh];
+    [self endRefresh];
     [timer invalidate];
 }
 
