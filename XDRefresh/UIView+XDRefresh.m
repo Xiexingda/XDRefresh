@@ -98,7 +98,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
             positionFrame = CGRectMake(position.x, self.frame.origin.y + position.y, ICONSIZE, ICONSIZE);
             
         } else {
-            positionFrame = CGRectMake(10, self.frame.origin.y + 34, ICONSIZE, ICONSIZE);
+            positionFrame = CGRectMake(10, self.frame.origin.y + 64 - ICONSIZE, ICONSIZE, ICONSIZE);
         }
             self.refreshView = [[RefreshView alloc]initWithFrame:positionFrame];
     }
