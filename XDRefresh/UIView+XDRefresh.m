@@ -137,17 +137,18 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     
     CGFloat offsetY = self.extenScrollView.contentOffset.y;
     
-    /**异步线程**/
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        /**非刷新状态**/
-        if (self.refreshStatus == XDREFRESH_Default) {
-            [self defaultHandleWithOffSet:offsetY change:change];
-            
-        /**刷新状态**/
-        } else if (self.refreshStatus == XDREFRESH_BeginRefresh) {
-            [self refreshingHandleWithOffSet:offsetY];
-        }
+    /**异步调用主线程**/
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            /**非刷新状态**/
+            if (self.refreshStatus == XDREFRESH_Default) {
+                [self defaultHandleWithOffSet:offsetY change:change];
+                
+                /**刷新状态**/
+            } else if (self.refreshStatus == XDREFRESH_BeginRefresh) {
+                [self refreshingHandleWithOffSet:offsetY];
+            }
+        });
     });
 }
 
