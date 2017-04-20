@@ -369,13 +369,14 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
             [self.refreshView setContentOffset:CGPointMake(0, 0)];
             
         } completion:^(BOOL finished) {
-            //结束后将状态重置为非刷新状态 以备下次刷新
-            self.refreshStatus = XDREFRESH_Default;
             //结束动画
             [self.refreshView.refreshIcon.layer removeAnimationForKey:@"refreshing"];
             
             //当回到原始位置后，转角也回到原始位置
             [self trangleToBeOriginal];
+            
+            //结束后将状态重置为非刷新状态 以备下次刷新
+            self.refreshStatus = XDREFRESH_Default;
         }];
     }
 }
