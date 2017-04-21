@@ -423,8 +423,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
                                                                     self.frame.size.height)];
     }
         _refreshIcon.backgroundColor = [UIColor redColor];
-        _refreshIcon.image = [[UIImage imageNamed:@"refreshIcon.png"]
-                              imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        _refreshIcon.image = [[UIImage imageWithContentsOfFile:[[NSBundle bundleWithPath:[[NSBundle bundleForClass:[RefreshView class]] pathForResource:@"XDRefreshResource" ofType:@"bundle"]] pathForResource:@"refresh" ofType:@"png"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         _refreshIcon.contentMode = UIViewContentModeScaleAspectFit;
         _refreshIcon.clipsToBounds = YES;
         _refreshIcon.layer.cornerRadius = self.frame.size.width/2.0;

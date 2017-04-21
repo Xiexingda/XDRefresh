@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E5F925B1EA9CCD600F4CAA5 /* XDRefreshResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8E5F925A1EA9CCD600F4CAA5 /* XDRefreshResource.bundle */; };
 		8EDA2B181EA616D0005C415D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EDA2B171EA616D0005C415D /* main.m */; };
 		8EDA2B1B1EA616D0005C415D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EDA2B1A1EA616D0005C415D /* AppDelegate.m */; };
 		8EDA2B1E1EA616D0005C415D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EDA2B1D1EA616D0005C415D /* ViewController.m */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8E5F925A1EA9CCD600F4CAA5 /* XDRefreshResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = XDRefreshResource.bundle; sourceTree = "<group>"; };
 		8EDA2B131EA616D0005C415D /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EDA2B171EA616D0005C415D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8EDA2B191EA616D0005C415D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 			children = (
 				8EDA2B4B1EA61737005C415D /* UIView+XDRefresh.h */,
 				8EDA2B4C1EA61737005C415D /* UIView+XDRefresh.m */,
+				8E5F925A1EA9CCD600F4CAA5 /* XDRefreshResource.bundle */,
 			);
 			name = XDRefresh;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 			files = (
 				8EDA2B261EA616D0005C415D /* LaunchScreen.storyboard in Resources */,
 				8EDA2B231EA616D0005C415D /* Assets.xcassets in Resources */,
+				8E5F925B1EA9CCD600F4CAA5 /* XDRefreshResource.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
