@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger,StatusOfRefresh) {
 @property (nonatomic, assign)CGFloat threshold;
 
 // 记录scrollView.contentInset.top
-@property (nonatomic, strong)NSNumber *marginTop;
+@property (nonatomic, assign)CGFloat marginTop;
 
 //记录刷新状态
 @property (nonatomic, assign)StatusOfRefresh refreshStatus;
@@ -67,8 +67,5 @@ typedef NS_ENUM(NSInteger,StatusOfRefresh) {
 @interface RefreshView : UIScrollView
 //刷新view的icon
 @property (nonatomic, strong)UIImageView *refreshIcon;
-
-//记录刷新状态
-@property (nonatomic, assign)StatusOfRefresh refreshStatus;
 
 @end

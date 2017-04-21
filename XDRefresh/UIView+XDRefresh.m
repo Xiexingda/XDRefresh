@@ -15,7 +15,7 @@
 #define CircleTime  0.8     //旋转一圈所用时间
 #define IconBackTime 0.2    //icon刷新完返回最顶端的时间
 
-static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key;
+static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key, RefreshStatus_Key;
 
 @implementation UIView (XDRefresh)
 /**animation**/
@@ -51,11 +51,11 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
 }
 
 /**实时记录下拉初始状态**/
-- (void)setMarginTop:(NSNumber *)marginTop {
-    objc_setAssociatedObject(self, &MarginTop_Key, marginTop, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setMarginTop:(CGFloat)marginTop {
+    objc_setAssociatedObject(self, &MarginTop_Key, [NSNumber numberWithFloat:marginTop], OBJC_ASSOCIATION_RETAIN);
 }
-- (NSNumber *)marginTop {
-    return objc_getAssociatedObject(self, &MarginTop_Key);
+- (CGFloat)marginTop {
+    return [objc_getAssociatedObject(self, &MarginTop_Key) floatValue];
 }
 
 /**icon下拉范围**/
@@ -76,10 +76,10 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
 
 /**刷新状态**/
 - (void)setRefreshStatus:(StatusOfRefresh)refreshStatus {
-    self.refreshView.refreshStatus = refreshStatus;
+    objc_setAssociatedObject(self, &RefreshStatus_Key, [NSNumber numberWithInteger:refreshStatus], OBJC_ASSOCIATION_RETAIN);
 }
 - (StatusOfRefresh)refreshStatus {
-    return self.refreshView.refreshStatus;
+    return [objc_getAssociatedObject(self, &RefreshStatus_Key) integerValue];
 }
 
 
@@ -131,8 +131,8 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     }
     
     // 实时监测scrollView.contentInset.top， 系统优化以及手动设置contentInset都会影响contentInset.top。
-    if (self.marginTop.floatValue != self.extenScrollView.contentInset.top) {
-        self.marginTop = [NSNumber numberWithFloat:self.extenScrollView.contentInset.top];
+    if (self.marginTop != self.extenScrollView.contentInset.top) {
+        self.marginTop = self.extenScrollView.contentInset.top;
     }
     
     CGFloat offsetY = self.extenScrollView.contentOffset.y;
@@ -159,7 +159,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
  */
 - (void)defaultHandleWithOffSet:(CGFloat)offsetY change:(NSDictionary<NSKeyValueChangeKey,id> *)change {
     // 向下滑动时<0，向上滑动时>0；
-    CGFloat defaultoffsetY = offsetY + self.marginTop.floatValue;
+    CGFloat defaultoffsetY = offsetY + self.marginTop;
     
     /**刷新动作区间**/
     if (defaultoffsetY > self.threshold && defaultoffsetY < 0) {
@@ -218,7 +218,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
  */
 - (void)refreshingHandleWithOffSet:(CGFloat)offsetY {
     //转换坐标（相对费刷新状态）
-    CGFloat refreshoffsetY = offsetY + self.marginTop.floatValue + self.threshold;
+    CGFloat refreshoffsetY = offsetY + self.marginTop + self.threshold;
     /**刷新状态时动作区间**/
     if (refreshoffsetY > self.threshold && refreshoffsetY < 0) {
         [self.refreshView setContentOffset:CGPointMake(0, refreshoffsetY)];
@@ -428,10 +428,6 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
         _refreshIcon.clipsToBounds = YES;
         _refreshIcon.layer.cornerRadius = self.frame.size.width/2.0;
         [self addSubview:_refreshIcon];
-}
-
-- (void)setRefreshStatus:(StatusOfRefresh)refreshStatus {
-    _refreshStatus = refreshStatus;
 }
 
 @end
