@@ -106,7 +106,7 @@ Pod::Spec.new do |s|
   #
 
   # s.resource  = "timg.jpeg"
-  s.resources = "XDRefresh/Demo/Assets.xcassets"
+  s.resources = "XDRefresh/XDRefreshResource.bundle"
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
