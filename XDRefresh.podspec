@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "XDRefresh"
-  s.version      = "1.0.5"
+  s.version      = "1.0.7"
   s.summary      = "下拉刷新"
 
   # This description is used to generate tags and improve search results.
@@ -105,8 +105,8 @@ Pod::Spec.new do |s|
   #  non-essential files like tests, examples and documentation.
   #
 
-  # s.resource  = "icon.png"
-  # s.resources = "Resources/*.png"
+  # s.resource  = "timg.jpeg"
+  # s.resources = "XDRefresh/*(.png|.jpeg)"
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 

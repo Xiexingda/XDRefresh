@@ -14,7 +14,6 @@
 		8EDA2B261EA616D0005C415D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EDA2B241EA616D0005C415D /* LaunchScreen.storyboard */; };
 		8EDA2B311EA616D0005C415D /* DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EDA2B301EA616D0005C415D /* DemoTests.m */; };
 		8EDA2B3C1EA616D0005C415D /* DemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EDA2B3B1EA616D0005C415D /* DemoUITests.m */; };
-		8EDA2B4D1EA61737005C415D /* timg.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 8EDA2B4A1EA61737005C415D /* timg.jpeg */; };
 		8EDA2B4E1EA61737005C415D /* UIView+XDRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EDA2B4C1EA61737005C415D /* UIView+XDRefresh.m */; };
 /* End PBXBuildFile section */
 
@@ -51,7 +50,6 @@
 		8EDA2B371EA616D0005C415D /* DemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EDA2B3B1EA616D0005C415D /* DemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoUITests.m; sourceTree = "<group>"; };
 		8EDA2B3D1EA616D0005C415D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8EDA2B4A1EA61737005C415D /* timg.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = timg.jpeg; path = XDRefresh/timg.jpeg; sourceTree = SOURCE_ROOT; };
 		8EDA2B4B1EA61737005C415D /* UIView+XDRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+XDRefresh.h"; path = "XDRefresh/UIView+XDRefresh.h"; sourceTree = SOURCE_ROOT; };
 		8EDA2B4C1EA61737005C415D /* UIView+XDRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+XDRefresh.m"; path = "XDRefresh/UIView+XDRefresh.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -146,7 +144,6 @@
 		8EDA2B491EA6171C005C415D /* XDRefresh */ = {
 			isa = PBXGroup;
 			children = (
-				8EDA2B4A1EA61737005C415D /* timg.jpeg */,
 				8EDA2B4B1EA61737005C415D /* UIView+XDRefresh.h */,
 				8EDA2B4C1EA61737005C415D /* UIView+XDRefresh.m */,
 			);
@@ -264,7 +261,6 @@
 			files = (
 				8EDA2B261EA616D0005C415D /* LaunchScreen.storyboard in Resources */,
 				8EDA2B231EA616D0005C415D /* Assets.xcassets in Resources */,
-				8EDA2B4D1EA61737005C415D /* timg.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -423,7 +423,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
                                                                     self.frame.size.height)];
     }
         _refreshIcon.backgroundColor = [UIColor redColor];
-        _refreshIcon.image = [[UIImage imageNamed:@"timg.jpeg"]
+        _refreshIcon.image = [[UIImage imageNamed:@"refreshIcon.png"]
                               imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         _refreshIcon.contentMode = UIViewContentModeScaleAspectFit;
         _refreshIcon.clipsToBounds = YES;
