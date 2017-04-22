@@ -23,6 +23,12 @@
     _tableview = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableview.delegate = self;
     _tableview.dataSource = self;
+    _tableview.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0,
+                                                                         0,
+                                                                         self.view.bounds.size.width,
+                                                                         400)];
+    _tableview.tableHeaderView.backgroundColor = [UIColor lightGrayColor];
+    _tableview.contentInset = UIEdgeInsetsMake(-100, 0, 0, 0);
     _tableview.tableFooterView = [UIView new];
     [self.view addSubview:_tableview];
     
