@@ -341,8 +341,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     /**
      仿微信当下拉一直拖住时，icon不会返回
      虽然在repeat的计时器里，但是该方法只会回调一次
-     原理：nstimer是放在runloop中的，当下拉拖住时runloop被占用，这个时候nstimer只调用，不执行回掉，
-     当松开手时拖拽动作执行完毕，这个时候nstimer被执，block开始回调，在第一次回调后又调用了invalidate方法将计时器释放了
+     原理：nstimer默认是放在defaultrunloop中的，当下拉拖住时runloop改成了tracking模式，同一时间下线程只能处理一种runloop模式，所以滚动时timer只注册不执行，当松开手时拖拽动作执行完毕，runloop回到default模式下，这个时候nstimer被执，block开始回调，在第一次回调后又调用了invalidate方法将计时器释放了
      注意** 最后用invalidate把计时器释放掉
      */
     if (self.extenScrollView.isDragging) {
