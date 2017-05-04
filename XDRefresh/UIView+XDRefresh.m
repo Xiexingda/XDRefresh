@@ -9,7 +9,7 @@
 #import "UIView+XDRefresh.h"
 #import <objc/runtime.h>
 
-#define MARGINTOP   60      //刷新icon区间
+#define MARGINTOP   50      //刷新icon区间
 #define ICONSIZE    30      //下拉刷新icon 的大小
 
 #define CircleTime  0.8     //旋转一圈所用时间
