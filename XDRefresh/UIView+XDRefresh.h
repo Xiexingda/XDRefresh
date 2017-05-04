@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger,StatusOfRefresh) {
-    XDREFRESH_Default = 1,
-    XDREFRESH_BeginRefresh,
+    XDREFRESH_Default = 1,     //非刷新状态，该值不能为0
+    XDREFRESH_BeginRefresh,    //刷新状态
     XDREFRESH_None             //全非状态（即不是刷新 也不是 非刷新状态）
 };
 
