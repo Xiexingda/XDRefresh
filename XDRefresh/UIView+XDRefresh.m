@@ -353,7 +353,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     __weak typeof(self) weakSelf = self;
     if (self.extenScrollView.isDragging) {
         //iOS10 以上
-        if ([UIDevice currentDevice].systemVersion.floatValue >= 10) {
+        if (@available(iOS 10, *)) {
             [NSTimer scheduledTimerWithTimeInterval:0.2 repeats:YES block:^(NSTimer * _Nonnull timer) {
                 [weakSelf endRefresh];
                 [timer invalidate];
