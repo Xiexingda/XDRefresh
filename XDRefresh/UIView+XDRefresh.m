@@ -116,7 +116,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    
+    __weak typeof(self) weakSelf = self;
     //屏蔽掉全非状态时的操作
     if (self.refreshStatus == XDREFRESH_None) {
         return;
@@ -125,7 +125,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     //屏蔽掉开始进入界面时的系统下拉动作
     if (self.refreshStatus == 0) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            self.refreshStatus = XDREFRESH_Default;
+            weakSelf.refreshStatus = XDREFRESH_Default;
         });
         return;
     }
@@ -139,14 +139,15 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     
     /**异步调用主线程**/
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         dispatch_async(dispatch_get_main_queue(), ^{
             /**非刷新状态**/
-            if (self.refreshStatus == XDREFRESH_Default) {
-                [self defaultHandleWithOffSet:offsetY change:change];
+            if (strongSelf.refreshStatus == XDREFRESH_Default) {
+                [strongSelf defaultHandleWithOffSet:offsetY change:change];
                 
                 /**刷新状态**/
-            } else if (self.refreshStatus == XDREFRESH_BeginRefresh) {
-                [self refreshingHandleWithOffSet:offsetY];
+            } else if (strongSelf.refreshStatus == XDREFRESH_BeginRefresh) {
+                [strongSelf refreshingHandleWithOffSet:offsetY];
             }
         });
     });
@@ -158,6 +159,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
  @param offsetY tableview滚动偏移量
  */
 - (void)defaultHandleWithOffSet:(CGFloat)offsetY change:(NSDictionary<NSKeyValueChangeKey,id> *)change {
+    __weak typeof(self) weakSelf = self;
     // 向下滑动时<0，向上滑动时>0；
     CGFloat defaultoffsetY = offsetY + self.marginTop;
     
@@ -179,7 +181,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     if (defaultoffsetY <= self.threshold && self.refreshView.contentOffset.y != self.threshold) {
         //添加动作，避免越级过大造成直接跳到最大位置影响体验
         [UIView animateWithDuration:0.05 animations:^{
-            [self.refreshView setContentOffset:CGPointMake(0, self.threshold)];
+            [weakSelf.refreshView setContentOffset:CGPointMake(0, weakSelf.threshold)];
         }];
     }
     
@@ -217,6 +219,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
  @param offsetY tableview滚动偏移量
  */
 - (void)refreshingHandleWithOffSet:(CGFloat)offsetY {
+    __weak typeof(self) weakSelf = self;
     //转换坐标（相对费刷新状态）
     CGFloat refreshoffsetY = offsetY + self.marginTop + self.threshold;
     /**刷新状态时动作区间**/
@@ -228,7 +231,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     if (refreshoffsetY <= self.threshold && self.refreshView.contentOffset.y != self.threshold) {
         //添加动作，避免越级过大造成直接跳到最大位置影响体验
         [UIView animateWithDuration:0.05 animations:^{
-            [self.refreshView setContentOffset:CGPointMake(0, self.threshold)];
+            [weakSelf.refreshView setContentOffset:CGPointMake(0, weakSelf.threshold)];
         }];
     }
     
@@ -262,6 +265,8 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
         return;
     }
     
+    __weak typeof(self) weakSelf = self;
+    
     /**
      非刷新状态下的动作处理
      */
@@ -278,13 +283,13 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (oldPoint.y < newPoint.y) {
-                self.refreshView.refreshIcon.transform = CGAffineTransformRotate(self.refreshView.refreshIcon.transform,
-                                                                               -self.offsetCollect/50);
+                weakSelf.refreshView.refreshIcon.transform = CGAffineTransformRotate(weakSelf.refreshView.refreshIcon.transform,
+                                                                               -weakSelf.offsetCollect/50);
                 
                 NSLog(@"向上拉动");
             } else if (oldPoint.y > newPoint.y) {
-                self.refreshView.refreshIcon.transform = CGAffineTransformRotate(self.refreshView.refreshIcon.transform,
-                                                                               self.offsetCollect/50);
+                weakSelf.refreshView.refreshIcon.transform = CGAffineTransformRotate(weakSelf.refreshView.refreshIcon.transform,
+                                                                               weakSelf.offsetCollect/50);
                 
                 NSLog(@"向下拉动");
                 
@@ -303,13 +308,13 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
         
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 //逆时针效果
-                                self.animation.fromValue = [NSNumber numberWithFloat:0.f];
-                                self.animation.toValue =  [NSNumber numberWithFloat: -M_PI *2];
-                                self.animation.duration  = CircleTime;
-                                self.animation.autoreverses = NO;
-                                self.animation.fillMode =kCAFillModeForwards;
-                                self.animation.repeatCount = MAXFLOAT; //一直自旋转
-                                [self.refreshView.refreshIcon.layer addAnimation:self.animation forKey:@"refreshing"];
+                                weakSelf.animation.fromValue = [NSNumber numberWithFloat:0.f];
+                                weakSelf.animation.toValue =  [NSNumber numberWithFloat: -M_PI *2];
+                                weakSelf.animation.duration  = CircleTime;
+                                weakSelf.animation.autoreverses = NO;
+                                weakSelf.animation.fillMode =kCAFillModeForwards;
+                                weakSelf.animation.repeatCount = MAXFLOAT; //一直自旋转
+                                [weakSelf.refreshView.refreshIcon.layer addAnimation:weakSelf.animation forKey:@"refreshing"];
                             });
     }
 }
@@ -329,8 +334,9 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
         return;
     }
     //延迟刷新0.3秒，避免立即返回tableview时offset不稳定造成反弹等不理想的效果
+    __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self endRefresh];
+        [weakSelf endRefresh];
     });
 }
 
@@ -344,11 +350,12 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
      原理：nstimer默认是放在defaultrunloop中的，当下拉拖住时runloop改成了tracking模式，同一时间下线程只能处理一种runloop模式，所以滚动时timer只注册不执行，当松开手时拖拽动作执行完毕，runloop回到default模式下，这个时候nstimer被执，block开始回调，在第一次回调后又调用了invalidate方法将计时器释放了
      注意** 最后用invalidate把计时器释放掉
      */
+    __weak typeof(self) weakSelf = self;
     if (self.extenScrollView.isDragging) {
         //iOS10 以上
         if ([UIDevice currentDevice].systemVersion.floatValue >= 10) {
             [NSTimer scheduledTimerWithTimeInterval:0.2 repeats:YES block:^(NSTimer * _Nonnull timer) {
-                [self endRefresh];
+                [weakSelf endRefresh];
                 [timer invalidate];
             }];
             
@@ -365,17 +372,17 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
         self.refreshStatus = XDREFRESH_None;
         
         [UIView animateWithDuration:IconBackTime animations:^{
-            [self.refreshView setContentOffset:CGPointMake(0, 0)];
+            [weakSelf.refreshView setContentOffset:CGPointMake(0, 0)];
             
         } completion:^(BOOL finished) {
             //结束动画
-            [self.refreshView.refreshIcon.layer removeAnimationForKey:@"refreshing"];
+            [weakSelf.refreshView.refreshIcon.layer removeAnimationForKey:@"refreshing"];
             
             //当回到原始位置后，转角也回到原始位置
-            [self trangleToBeOriginal];
+            [weakSelf trangleToBeOriginal];
             
             //结束后将状态重置为非刷新状态 以备下次刷新
-            self.refreshStatus = XDREFRESH_Default;
+            weakSelf.refreshStatus = XDREFRESH_Default;
         }];
     }
 }

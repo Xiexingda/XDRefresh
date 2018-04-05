@@ -37,11 +37,13 @@
      添加下拉刷新
      
      */
+    __weak typeof(self) weakSelf = self;
     [self.view XD_refreshWithObject:_tableview atPoint:CGPointZero downRefresh:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         //开始刷新
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             //3 秒后结束刷新
-            [self.view XD_endRefresh];
+            [strongSelf.view XD_endRefresh];
         });
     }];
 }
