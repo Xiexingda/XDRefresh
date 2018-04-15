@@ -139,8 +139,8 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     
     /**异步调用主线程**/
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
         dispatch_async(dispatch_get_main_queue(), ^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
             /**非刷新状态**/
             if (strongSelf.refreshStatus == XDREFRESH_Default) {
                 [strongSelf defaultHandleWithOffSet:offsetY change:change];
