@@ -87,6 +87,13 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     if (![scrollView isKindOfClass:[UIScrollView class]]) {
         return;
     }
+    
+    if (@available(iOS 11.0, *)) {
+        scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        // Fallback on earlier versions
+    }
+    
     self.refreshBlock = block;
     self.extenScrollView = scrollView;
     [self addObserverForView:self.extenScrollView];
