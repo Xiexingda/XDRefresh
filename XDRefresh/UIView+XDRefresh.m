@@ -51,6 +51,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
 @end
 
 @implementation UIView (XDRefresh)
+
 /**animation**/
 - (void)setAnimation:(CABasicAnimation *)animation {
     objc_setAssociatedObject(self, &Animation_Key, animation, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -441,7 +442,11 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
  释放观察
  */
 - (void)XD_freeReFresh {
-    [self.extenScrollView removeObserver:self forKeyPath:@"contentOffset"];
+    @try {
+        [self.extenScrollView removeObserver:self forKeyPath:@"contentOffset"];
+    } @catch (NSException *e) {
+        
+    }
 }
 
 @end

@@ -55,6 +55,11 @@
     return 20;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    ViewController *view = [[ViewController alloc]init];
+    [self.navigationController pushViewController:view animated:YES];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"testcell"];
     if (!cell) {
@@ -64,6 +69,9 @@
     return cell;
 }
 
+- (void)dealloc {
+    [self.view XD_freeReFresh];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
