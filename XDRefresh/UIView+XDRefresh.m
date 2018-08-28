@@ -8,6 +8,7 @@
 
 #import "UIView+XDRefresh.h"
 #import <objc/runtime.h>
+@class RefreshView;
 
 #define MARGINTOP   50      //刷新icon区间
 #define ICONSIZE    30      //下拉刷新icon 的大小
@@ -15,7 +16,39 @@
 #define CircleTime  0.8     //旋转一圈所用时间
 #define IconBackTime 0.2    //icon刷新完返回最顶端的时间
 
+typedef NS_ENUM(NSInteger,StatusOfRefresh) {
+    XDREFRESH_Default = 1,     //非刷新状态，该值不能为0
+    XDREFRESH_BeginRefresh,    //刷新状态
+    XDREFRESH_None             //全非状态（即不是刷新 也不是 非刷新状态）
+};
+
 static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key, RefreshStatus_Key;
+
+@interface UIView()
+// 监测范围的临界点,>0代表向上滑动多少距离,<0则是向下滑动多少距离
+@property (nonatomic, assign)CGFloat threshold;
+
+// 记录scrollView.contentInset.top
+@property (nonatomic, assign)CGFloat marginTop;
+
+//记录刷新状态
+@property (nonatomic, assign)StatusOfRefresh refreshStatus;
+
+//用于刷新回调
+@property (nonatomic, copy)void(^refreshBlock)(void);
+
+//刷新动画
+@property (nonatomic, strong) CABasicAnimation *animation;
+
+//偏移量累加
+@property (nonatomic, assign) CGFloat offsetCollect;
+
+//刷新view
+@property (nonatomic, strong) RefreshView *refreshView;
+
+//用于承接需要刷新的下拉刷新的extenScrollView
+@property (nonatomic, strong) UIScrollView *extenScrollView;
+@end
 
 @implementation UIView (XDRefresh)
 /**animation**/
