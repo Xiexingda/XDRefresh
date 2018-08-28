@@ -313,12 +313,12 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     if (status == XDREFRESH_Default) {
         /**把nsPoint结构体转换为cgPoint**/
         CGPoint oldPoint;
-                id oldValue = [change valueForKey:NSKeyValueChangeOldKey];
+                id oldValue = [change objectForKey:NSKeyValueChangeOldKey];
                 [(NSValue*)oldValue getValue:&oldPoint];
         
         
         CGPoint newPoint;
-                id newValue = [ change valueForKey:NSKeyValueChangeNewKey ];
+                id newValue = [ change objectForKey:NSKeyValueChangeNewKey ];
                 [(NSValue*)newValue getValue:&newPoint];
         
         dispatch_async(dispatch_get_main_queue(), ^{
