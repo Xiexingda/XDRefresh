@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E3AE480215B210500EF98AD /* CollectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3AE47F215B210500EF98AD /* CollectionTest.m */; };
+		8E3AE484215B222000EF98AD /* CollectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3AE482215B222000EF98AD /* CollectCell.m */; };
 		8E5F925D1EA9CF1D00F4CAA5 /* XDRefreshResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8E5F925C1EA9CF1D00F4CAA5 /* XDRefreshResource.bundle */; };
 		8EDA2B181EA616D0005C415D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EDA2B171EA616D0005C415D /* main.m */; };
 		8EDA2B1B1EA616D0005C415D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EDA2B1A1EA616D0005C415D /* AppDelegate.m */; };
@@ -36,6 +38,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8E3AE47E215B210500EF98AD /* CollectionTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionTest.h; sourceTree = "<group>"; };
+		8E3AE47F215B210500EF98AD /* CollectionTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionTest.m; sourceTree = "<group>"; };
+		8E3AE481215B222000EF98AD /* CollectCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectCell.h; sourceTree = "<group>"; };
+		8E3AE482215B222000EF98AD /* CollectCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectCell.m; sourceTree = "<group>"; };
 		8E5F925C1EA9CF1D00F4CAA5 /* XDRefreshResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = XDRefreshResource.bundle; path = XDRefresh/XDRefreshResource.bundle; sourceTree = SOURCE_ROOT; };
 		8EDA2B131EA616D0005C415D /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EDA2B171EA616D0005C415D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -108,6 +114,10 @@
 				8EDA2B1A1EA616D0005C415D /* AppDelegate.m */,
 				8EDA2B1C1EA616D0005C415D /* ViewController.h */,
 				8EDA2B1D1EA616D0005C415D /* ViewController.m */,
+				8E3AE47E215B210500EF98AD /* CollectionTest.h */,
+				8E3AE47F215B210500EF98AD /* CollectionTest.m */,
+				8E3AE481215B222000EF98AD /* CollectCell.h */,
+				8E3AE482215B222000EF98AD /* CollectCell.m */,
 				8EDA2B491EA6171C005C415D /* XDRefresh */,
 				8EDA2B221EA616D0005C415D /* Assets.xcassets */,
 				8EDA2B241EA616D0005C415D /* LaunchScreen.storyboard */,
@@ -291,7 +301,9 @@
 			files = (
 				8EDA2B4E1EA61737005C415D /* UIView+XDRefresh.m in Sources */,
 				8EDA2B1E1EA616D0005C415D /* ViewController.m in Sources */,
+				8E3AE480215B210500EF98AD /* CollectionTest.m in Sources */,
 				8EDA2B1B1EA616D0005C415D /* AppDelegate.m in Sources */,
+				8E3AE484215B222000EF98AD /* CollectCell.m in Sources */,
 				8EDA2B181EA616D0005C415D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

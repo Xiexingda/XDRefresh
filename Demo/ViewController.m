@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "UIView+XDRefresh.h"
+#import "CollectionTest.h"
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableview;
@@ -15,6 +16,9 @@
 @end
 
 @implementation ViewController
+- (void)dealloc {
+    [self.view XD_freeReFresh];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -56,7 +60,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ViewController *view = [[ViewController alloc]init];
+    CollectionTest *view = [[CollectionTest alloc]init];
     [self.navigationController pushViewController:view animated:YES];
 }
 
@@ -67,10 +71,6 @@
     }
     cell.textLabel.text = @"XD_下拉刷新测试";
     return cell;
-}
-
-- (void)dealloc {
-    [self.view XD_freeReFresh];
 }
 
 - (void)didReceiveMemoryWarning {
