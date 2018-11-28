@@ -23,6 +23,7 @@
 [self.view XD_endRefresh];
 
 4. 退出界面时一定要释放掉观察者
+
 [self.view XD_freeReFresh];
 
 # 效果
