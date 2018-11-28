@@ -26,9 +26,9 @@
     [super viewDidLoad];
     
     _layout = [[UICollectionViewFlowLayout alloc]init];
-    _layout.itemSize = CGSizeMake(KWIDTH, 200);
-    _layout.minimumLineSpacing = 0;
-    _layout.minimumInteritemSpacing = 0;
+    _layout.itemSize = CGSizeMake((KWIDTH-10)/2, 200);
+    _layout.minimumLineSpacing = 10;
+    _layout.minimumInteritemSpacing = 10;
     
     _collect = [[UICollectionView alloc]initWithFrame:self.view.bounds collectionViewLayout:_layout];
     _collect.dataSource = self;

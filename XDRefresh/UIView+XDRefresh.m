@@ -93,17 +93,11 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
 }
 
 /**icon下拉范围**/
-- (void)setThreshold:(CGFloat)threshold {
-    //不需要任何操作
-}
 - (CGFloat)threshold {
     return -MARGINTOP;
 }
 
 /**offsetcollection**/
-- (void)setOffsetCollect:(CGFloat)offsetCollect {
-    //不需要任何操作
-}
 - (CGFloat)offsetCollect {
     return 10;
 }
@@ -143,8 +137,8 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
         }
             self.refreshView = [[RefreshView alloc]initWithFrame:positionFrame];
     }
-        [self addSubview:self.refreshView];
     
+    [self addSubview:self.refreshView];
 }
 
 /**
