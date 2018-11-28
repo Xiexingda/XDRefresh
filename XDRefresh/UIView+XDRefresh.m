@@ -299,8 +299,15 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     if (!need) {
         return;
     }
-    
     __weak typeof(self) weakSelf = self;
+    
+    if (self.refreshView.refreshIcon.isHidden) {
+        [UIView animateWithDuration:0.05 animations:^{
+            weakSelf.refreshView.refreshIcon.alpha = 1;
+        } completion:^(BOOL finished) {
+            weakSelf.refreshView.refreshIcon.hidden = NO;
+        }];
+    }
     
     /**
      非刷新状态下的动作处理
@@ -358,7 +365,8 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
  角度还原:用于非刷新时回到顶部 和 刷新状态endRefresh 中
  */
 - (void)trangleToBeOriginal {
-    self.refreshView.refreshIcon.transform = self.refreshView.transform;
+    self.refreshView.refreshIcon.transform = CGAffineTransformIdentity;
+    self.refreshView.refreshIcon.hidden = YES;
 }
 
 /**
@@ -408,7 +416,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
         
         [UIView animateWithDuration:IconBackTime animations:^{
             [weakSelf.refreshView setContentOffset:CGPointMake(0, 0)];
-            
+            weakSelf.refreshView.refreshIcon.alpha = 0;
         } completion:^(BOOL finished) {
             //结束动画
             [weakSelf.refreshView.refreshIcon.layer removeAnimationForKey:@"refreshing"];
@@ -467,12 +475,13 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
                                                                     self.frame.size.width,
                                                                     self.frame.size.height)];
     }
-        _refreshIcon.backgroundColor = [UIColor redColor];
-        _refreshIcon.image = [[UIImage imageWithContentsOfFile:[[NSBundle bundleWithPath:[[NSBundle bundleForClass:[RefreshView class]] pathForResource:@"XDRefreshResource" ofType:@"bundle"]] pathForResource:@"refresh" ofType:@"png"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        _refreshIcon.contentMode = UIViewContentModeScaleAspectFit;
-        _refreshIcon.clipsToBounds = YES;
-        _refreshIcon.layer.cornerRadius = self.frame.size.width/2.0;
-        [self addSubview:_refreshIcon];
+    _refreshIcon.hidden = YES;
+    _refreshIcon.backgroundColor = [UIColor redColor];
+    _refreshIcon.image = [[UIImage imageWithContentsOfFile:[[NSBundle bundleWithPath:[[NSBundle bundleForClass:[RefreshView class]] pathForResource:@"XDRefreshResource" ofType:@"bundle"]] pathForResource:@"refresh" ofType:@"png"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    _refreshIcon.contentMode = UIViewContentModeScaleAspectFit;
+    _refreshIcon.clipsToBounds = YES;
+    _refreshIcon.layer.cornerRadius = self.frame.size.width/2.0;
+    [self addSubview:_refreshIcon];
 }
 
 @end
