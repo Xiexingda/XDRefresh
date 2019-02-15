@@ -16,9 +16,6 @@
 @end
 
 @implementation ViewController
-- (void)dealloc {
-    [self.view XD_freeReFresh];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -50,6 +47,8 @@
             [strongSelf.view XD_endRefresh];
         });
     }];
+    [self.view XD_beginRefresh];
+    
 }
 
 

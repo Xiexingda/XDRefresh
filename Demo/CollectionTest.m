@@ -18,9 +18,6 @@
 @end
 
 @implementation CollectionTest
-- (void)dealloc {
-    [self.view XD_freeReFresh];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,6 +48,7 @@
             [strongSelf.view XD_endRefresh];
         });
     }];
+    [self.view XD_beginRefresh];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

@@ -24,6 +24,11 @@
 - (void)XD_endRefresh;
 
 /**
+ 开始刷新
+ */
+- (void)XD_beginRefresh;
+
+/**
  释放观察者
  */
 - (void)XD_freeReFresh;

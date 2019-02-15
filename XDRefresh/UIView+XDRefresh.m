@@ -22,7 +22,7 @@ typedef NS_ENUM(NSInteger,StatusOfRefresh) {
     XDREFRESH_None             //全非状态（即不是刷新 也不是 非刷新状态）
 };
 
-static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key, RefreshStatus_Key;
+static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key, RefreshStatus_Key, IsObserver_Key;
 
 @interface UIView()
 // 监测范围的临界点,>0代表向上滑动多少距离,<0则是向下滑动多少距离
@@ -48,9 +48,15 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
 
 //用于承接需要刷新的下拉刷新的extenScrollView
 @property (nonatomic, strong) UIScrollView *extenScrollView;
+
+@property (nonatomic, assign) BOOL isObserver;
 @end
 
 @implementation UIView (XDRefresh)
+
+- (void)dealloc {
+    [self XD_freeReFresh];
+}
 
 /**animation**/
 - (void)setAnimation:(CABasicAnimation *)animation {
@@ -86,10 +92,18 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
 
 /**实时记录下拉初始状态**/
 - (void)setMarginTop:(CGFloat)marginTop {
-    objc_setAssociatedObject(self, &MarginTop_Key, [NSNumber numberWithFloat:marginTop], OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, &MarginTop_Key, [NSNumber numberWithFloat:marginTop], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 - (CGFloat)marginTop {
     return [objc_getAssociatedObject(self, &MarginTop_Key) floatValue];
+}
+
+- (void)setIsObserver:(BOOL)isObserver {
+    objc_setAssociatedObject(self, &IsObserver_Key, @(isObserver), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)isObserver {
+    return [objc_getAssociatedObject(self, &IsObserver_Key) boolValue];
 }
 
 /**icon下拉范围**/
@@ -148,6 +162,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
  */
 - (void)addObserverForView:(UIView *)view {
     [view addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:nil];
+    self.isObserver = YES;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
@@ -276,6 +291,16 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     }
 }
 
+- (void)XD_beginRefresh {
+    self.refreshView.hidden = NO;
+    self.refreshView.refreshIcon.alpha = 1;
+    [self.refreshView setContentOffset:CGPointMake(0, self.threshold)];
+    [self anmiationHandelwithChange:nil
+                          andStatus:XDREFRESH_BeginRefresh
+                      needAnimation:YES];
+    [self beginRefresh];
+}
+
 /**
  开始刷新
  */
@@ -302,10 +327,11 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     __weak typeof(self) weakSelf = self;
     
     if (self.refreshView.refreshIcon.isHidden) {
+        self.refreshView.refreshIcon.hidden = NO;
         [UIView animateWithDuration:0.05 animations:^{
             weakSelf.refreshView.refreshIcon.alpha = 1;
         } completion:^(BOOL finished) {
-            weakSelf.refreshView.refreshIcon.hidden = NO;
+            
         }];
     }
     
@@ -314,14 +340,8 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
      */
     if (status == XDREFRESH_Default) {
         /**把nsPoint结构体转换为cgPoint**/
-        CGPoint oldPoint;
-                id oldValue = [change objectForKey:NSKeyValueChangeOldKey];
-                [(NSValue*)oldValue getValue:&oldPoint];
-        
-        
-        CGPoint newPoint;
-                id newValue = [ change objectForKey:NSKeyValueChangeNewKey ];
-                [(NSValue*)newValue getValue:&newPoint];
+        CGPoint oldPoint = [[change objectForKey:NSKeyValueChangeOldKey] CGPointValue];
+        CGPoint newPoint = [[change objectForKey:NSKeyValueChangeNewKey] CGPointValue];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (oldPoint.y < newPoint.y) {
@@ -444,10 +464,9 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
  释放观察
  */
 - (void)XD_freeReFresh {
-    @try {
+    if (self.isObserver) {
+        self.isObserver = NO;
         [self.extenScrollView removeObserver:self forKeyPath:@"contentOffset"];
-    } @catch (NSException *e) {
-        
     }
 }
 
