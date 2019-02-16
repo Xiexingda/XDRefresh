@@ -366,6 +366,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
                                 weakSelf.animation.toValue =  [NSNumber numberWithFloat: -M_PI *2];
                                 weakSelf.animation.duration  = CircleTime;
                                 weakSelf.animation.autoreverses = NO;
+                                weakSelf.animation.removedOnCompletion = NO;
                                 weakSelf.animation.fillMode =kCAFillModeForwards;
                                 weakSelf.animation.repeatCount = MAXFLOAT; //一直自旋转
                                 [weakSelf.refreshView.refreshIcon.layer addAnimation:weakSelf.animation forKey:@"refreshing"];
