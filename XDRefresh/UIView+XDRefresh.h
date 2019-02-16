@@ -29,7 +29,7 @@
 - (void)XD_beginRefresh;
 
 /**
- 释放观察者
+ 释放观察者，用于手动释放，否则将会在界面退出时自动释放
  */
 - (void)XD_freeReFresh;
 
