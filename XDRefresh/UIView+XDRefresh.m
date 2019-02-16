@@ -474,7 +474,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
         self.clipsToBounds = NO;
         self.bounces = NO;
         self.contentSize = CGSizeMake(self.frame.size.width, self.frame.size.height);
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor clearColor];
         [self creatMainUI];
     }
     return self;
@@ -488,7 +488,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
                                                                     self.frame.size.height)];
     }
     _refreshIcon.hidden = YES;
-    _refreshIcon.backgroundColor = [UIColor redColor];
+    _refreshIcon.backgroundColor = [UIColor clearColor];
     _refreshIcon.image = [[UIImage imageWithContentsOfFile:[[NSBundle bundleWithPath:[[NSBundle bundleForClass:[RefreshView class]] pathForResource:@"XDRefreshResource" ofType:@"bundle"]] pathForResource:@"refresh" ofType:@"png"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _refreshIcon.contentMode = UIViewContentModeScaleAspectFit;
     _refreshIcon.clipsToBounds = YES;
