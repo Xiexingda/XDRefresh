@@ -495,9 +495,4 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     [self addSubview:_refreshIcon];
 }
 
-- (void)setContentOffset:(CGPoint)contentOffset {
-    NSLog(@"====%f",contentOffset.y);
-    [super setContentOffset:contentOffset];
-}
-
 @end
