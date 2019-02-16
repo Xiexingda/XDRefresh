@@ -118,7 +118,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
 
 /**刷新状态**/
 - (void)setRefreshStatus:(StatusOfRefresh)refreshStatus {
-    objc_setAssociatedObject(self, &RefreshStatus_Key, [NSNumber numberWithInteger:refreshStatus], OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, &RefreshStatus_Key, [NSNumber numberWithInteger:refreshStatus], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 - (StatusOfRefresh)refreshStatus {
     return [objc_getAssociatedObject(self, &RefreshStatus_Key) integerValue];
@@ -209,7 +209,6 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
  @param offsetY tableview滚动偏移量
  */
 - (void)defaultHandleWithOffSet:(CGFloat)offsetY change:(NSDictionary<NSKeyValueChangeKey,id> *)change {
-    __weak typeof(self) weakSelf = self;
     // 向下滑动时<0，向上滑动时>0；
     CGFloat defaultoffsetY = offsetY + self.marginTop;
     
@@ -229,10 +228,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     
     /**(@"刷新临界点，把刷新icon置为最大区间")**/
     if (defaultoffsetY <= self.threshold && self.refreshView.contentOffset.y != self.threshold) {
-        //添加动作，避免越级过大造成直接跳到最大位置影响体验
-        [UIView animateWithDuration:0.05 animations:^{
-            [weakSelf.refreshView setContentOffset:CGPointMake(0, weakSelf.threshold)];
-        }];
+        [self.refreshView setContentOffset:CGPointMake(0, self.threshold)];
     }
     
     /**超过/等于 临界点后松手开始刷新，不松手则不刷新**/
@@ -269,7 +265,6 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
  @param offsetY tableview滚动偏移量
  */
 - (void)refreshingHandleWithOffSet:(CGFloat)offsetY {
-    __weak typeof(self) weakSelf = self;
     //转换坐标（相对费刷新状态）
     CGFloat refreshoffsetY = offsetY + self.marginTop + self.threshold;
     /**刷新状态时动作区间**/
@@ -279,10 +274,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     
     /**刷新状态临界点，把刷新icon置为最大区间**/
     if (refreshoffsetY <= self.threshold && self.refreshView.contentOffset.y != self.threshold) {
-        //添加动作，避免越级过大造成直接跳到最大位置影响体验
-        [UIView animateWithDuration:0.05 animations:^{
-            [weakSelf.refreshView setContentOffset:CGPointMake(0, weakSelf.threshold)];
-        }];
+        [self.refreshView setContentOffset:CGPointMake(0, self.threshold)];
     }
     
     /**当tableview相对坐标回滚到顶端的时候把刷新的iconPosition置零**/
@@ -501,6 +493,11 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     _refreshIcon.clipsToBounds = YES;
     _refreshIcon.layer.cornerRadius = self.frame.size.width/2.0;
     [self addSubview:_refreshIcon];
+}
+
+- (void)setContentOffset:(CGPoint)contentOffset {
+    NSLog(@"====%f",contentOffset.y);
+    [super setContentOffset:contentOffset];
 }
 
 @end
