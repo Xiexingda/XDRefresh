@@ -22,6 +22,12 @@
 
 [self.view XD_endRefresh];
 
+有问题可加群提问：
+
+群：659700776
+
+暗号：iOS
+
 # 效果
 ![image](https://github.com/Xiexingda/XDRefresh/blob/master/show.png)
 

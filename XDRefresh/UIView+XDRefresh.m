@@ -340,15 +340,15 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
                 weakSelf.refreshView.refreshIcon.transform = CGAffineTransformRotate(weakSelf.refreshView.refreshIcon.transform,
                                                                                -weakSelf.offsetCollect/50);
                 
-                NSLog(@"向上拉动");
+                //NSLog(@"向上拉动");
             } else if (oldPoint.y > newPoint.y) {
                 weakSelf.refreshView.refreshIcon.transform = CGAffineTransformRotate(weakSelf.refreshView.refreshIcon.transform,
                                                                                weakSelf.offsetCollect/50);
                 
-                NSLog(@"向下拉动");
+                //NSLog(@"向下拉动");
                 
             } else {
-                NSLog(@"没有拉动");
+                //NSLog(@"没有拉动");
             }
         });
         
