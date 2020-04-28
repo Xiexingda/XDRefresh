@@ -155,6 +155,8 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if (![keyPath isEqualToString:@"contentOffset"]) return;
+    
     __weak typeof(self) weakSelf = self;
     //屏蔽掉全非状态时的操作
     if (self.refreshStatus == XDREFRESH_None) {
