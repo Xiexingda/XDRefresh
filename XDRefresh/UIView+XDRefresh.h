@@ -16,22 +16,22 @@
  @param position icon位置（默认：{10，34}navBar左上角）
  @param block 刷新回调
  */
-- (void)XD_refreshWithObject:(UIScrollView *)scrollView atPoint:(CGPoint)position downRefresh:(void(^)(void))block;
+- (void)xd_refreshWithObject:(UIScrollView *)scrollView atPoint:(CGPoint)position downRefresh:(void(^)(void))block;
 
 /**
  结束刷新动作
  */
-- (void)XD_endRefresh;
+- (void)xd_endRefresh;
 
 /**
  开始刷新
  */
-- (void)XD_beginRefresh;
+- (void)xd_beginRefresh;
 
 /**
- 释放观察者，用于手动释放，否则将会在界面退出时自动释放
+ 释放观察者，用于手动释放
  */
-- (void)XD_freeReFresh;
+- (void)xd_freeReFresh;
 
 @end
 

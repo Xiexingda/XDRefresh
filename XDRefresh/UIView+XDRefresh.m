@@ -40,9 +40,6 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
 //刷新动画
 @property (nonatomic, strong) CABasicAnimation *animation;
 
-//偏移量累加
-@property (nonatomic, assign) CGFloat offsetCollect;
-
 //刷新view
 @property (nonatomic, strong) RefreshView *refreshView;
 
@@ -53,10 +50,6 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
 @end
 
 @implementation UIView (XDRefresh)
-
-- (void)dealloc {
-    [self XD_freeReFresh];
-}
 
 /**animation**/
 - (void)setAnimation:(CABasicAnimation *)animation {
@@ -111,10 +104,6 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     return -MARGINTOP;
 }
 
-/**offsetcollection**/
-- (CGFloat)offsetCollect {
-    return 10;
-}
 
 /**刷新状态**/
 - (void)setRefreshStatus:(StatusOfRefresh)refreshStatus {
@@ -125,7 +114,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
 }
 
 
-- (void)XD_refreshWithObject:(UIScrollView *)scrollView atPoint:(CGPoint)position downRefresh:(void (^)(void))block {
+- (void)xd_refreshWithObject:(UIScrollView *)scrollView atPoint:(CGPoint)position downRefresh:(void (^)(void))block {
     if (![scrollView isKindOfClass:[UIScrollView class]]) {
         return;
     }
@@ -283,7 +272,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
     }
 }
 
-- (void)XD_beginRefresh {
+- (void)xd_beginRefresh {
     self.refreshView.hidden = NO;
     self.refreshView.refreshIcon.alpha = 1;
     [self.refreshView setContentOffset:CGPointMake(0, self.threshold)];
@@ -337,13 +326,11 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (oldPoint.y < newPoint.y) {
-                weakSelf.refreshView.refreshIcon.transform = CGAffineTransformRotate(weakSelf.refreshView.refreshIcon.transform,
-                                                                               -weakSelf.offsetCollect/50);
+                weakSelf.refreshView.refreshIcon.transform = CGAffineTransformRotate(weakSelf.refreshView.refreshIcon.transform,-0.2);
                 
                 //NSLog(@"向上拉动");
             } else if (oldPoint.y > newPoint.y) {
-                weakSelf.refreshView.refreshIcon.transform = CGAffineTransformRotate(weakSelf.refreshView.refreshIcon.transform,
-                                                                               weakSelf.offsetCollect/50);
+                weakSelf.refreshView.refreshIcon.transform = CGAffineTransformRotate(weakSelf.refreshView.refreshIcon.transform,0.2);
                 
                 //NSLog(@"向下拉动");
                 
@@ -385,7 +372,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
 /**
  结束刷新 对外接口
  */
-- (void)XD_endRefresh {
+- (void)xd_endRefresh {
     if (!self.extenScrollView) {
         return;
     }
@@ -456,7 +443,7 @@ static char Refresh_Key, ScrollView_Key, Block_Key, MarginTop_Key, Animation_Key
 /**
  释放观察
  */
-- (void)XD_freeReFresh {
+- (void)xd_freeReFresh {
     if (self.isObserver) {
         self.isObserver = NO;
         [self.extenScrollView removeObserver:self forKeyPath:@"contentOffset"];

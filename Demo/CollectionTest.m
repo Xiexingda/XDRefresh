@@ -19,6 +19,10 @@
 
 @implementation CollectionTest
 
+- (void)dealloc {
+    [self.view xd_freeReFresh];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -40,15 +44,14 @@
      
      */
     __weak typeof(self) weakSelf = self;
-    [self.view XD_refreshWithObject:_collect atPoint:CGPointZero downRefresh:^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
+    [self.view xd_refreshWithObject:_collect atPoint:CGPointZero downRefresh:^{
         //开始刷新
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             //3 秒后结束刷新
-            [strongSelf.view XD_endRefresh];
+            [weakSelf.view xd_endRefresh];
         });
     }];
-    [self.view XD_beginRefresh];
+    [self.view xd_beginRefresh];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
